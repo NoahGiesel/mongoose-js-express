@@ -1,7 +1,7 @@
 
 
 const form = document.querySelector("form");
-const API_URL = "http://localhost:5500/client/labelsMain"
+const API_URL = "http://localhost:5500/labelsMain"
 
 
 
@@ -20,11 +20,13 @@ form.addEventListener("submit" ,   event => {
 
     //mando al URL con post
  fetch(API_URL, {
-            method : "POST", 
+            method:'POST',
+            mode: 'cors',
             body: JSON.stringify(informations),
-            headers: { 
-                "content-type":"application/json"
-            }
+            headers:{
+            'Access-Control-Allow-Origin':'*',
+            "content-type":"application/json"
+        }
         }) 
      
 
