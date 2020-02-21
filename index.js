@@ -2,6 +2,10 @@ const express = require("express") ;
 const cors = require("cors");
 const mongoose = require('mongoose');
 const app = express();
+
+const Post = require("./models/Post")
+
+
 require("dotenv/config")
 
  
@@ -33,7 +37,7 @@ function isValidLabel(label){
 }
 
 
-app.post("/labelsMain",(req,res) => {
+app.post("/labelsMain", async(req,res) => {
     if(isValidLabel(req.body)) { 
         const labelsMain = { 
         name: req.body.name.toString(),
@@ -41,18 +45,28 @@ app.post("/labelsMain",(req,res) => {
         created: new Date()
         }
 
-        labelsMain
-        .insert(labelsMain)
-        .then(createLabel => {
-            res.json(createLabel)
-        })
-
-    }else { 
+        const post = new Post(labelsMain)
+        const savedPost = await post.save() 
+     }else { 
         res.status(422)
         res.json({
             message: "Hey! Name and content are required"
         })
     }
 })
+
+app.get("/", async (req,res) =>  {
+    try {
+        const post = await Post.find()
+        res.json(post)
+        
+    }catch(err) { 
+        res.json( { message : err})
+    }
+})
+
+
+ 
+
 
 app.listen(3000, () => {console.log("i'm running on 3000")})

@@ -2,6 +2,7 @@
 
 const form = document.querySelector("form");
 const API_URL = "http://localhost:3000/labelsMain"
+const DEFAULT_URL = "http://localhost:3000/"
 
 
 
@@ -20,7 +21,8 @@ form.addEventListener("submit" ,    event => {
      
 
         //mando al URL con post
-        fetch(API_URL,    {
+        const clickToSend = () =>  {
+            fetch(API_URL, { 
             method:'POST', 
             body: JSON.stringify(informations),
             headers: { 
@@ -31,6 +33,22 @@ form.addEventListener("submit" ,    event => {
         .then(createLabel => {
             console.log(createLabel)
         })
+    }
+
+        //mando al URL con post
+       const clickToFetch = () =>      {
+        fetch(DEFAULT_URL,{ 
+            method:'GET', 
+            body: JSON.stringify(informations),
+            headers: { 
+                'content-type': 'application/json'
+              },
+        }) 
+        .then(  response => response.json())
+        .then(createLabel => {
+            console.log(createLabel)
+        })
+    }
      
 
 
